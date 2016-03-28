@@ -35,7 +35,7 @@ int Comp2::c2method( int input){
     //  Prepare our context and sockets
     zmq::context_t context (1);
     zmq::socket_t clients (context, ZMQ_ROUTER);
-    clients.bind ("tcp://*:5555");
+    clients.bind ("ipc:///tmp/zmqipc");
     zmq::socket_t workers (context, ZMQ_DEALER);
     workers.bind ("inproc://workers");
 

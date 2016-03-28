@@ -9,7 +9,7 @@ int Comp1::c1method( int input){
     zmq::socket_t socket (context, ZMQ_REQ);
 
     std::cout << "Connecting to hello world server." << std::endl;
-    socket.connect ("tcp://localhost:5555");
+    socket.connect ("ipc:///tmp/zmqipc");
 
     //  Do 10 requests, waiting each time for a response
     for (int request_nbr = 0; request_nbr != 100000; request_nbr++) {
