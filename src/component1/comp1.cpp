@@ -12,7 +12,7 @@ int Comp1::c1method( int input){
     socket.connect ("tcp://localhost:5555");
 
     //  Do 10 requests, waiting each time for a response
-    for (int request_nbr = 0; request_nbr != 10; request_nbr++) {
+    for (int request_nbr = 0; request_nbr != 100000; request_nbr++) {
         zmq::message_t request (5);
         memcpy (request.data (), "Hello", 5);
         std::cout << "Sending Hello " << request_nbr << "." << std::endl;

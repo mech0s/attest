@@ -21,7 +21,7 @@ void *worker_routine (void *arg)
         std::cout << "Received request: [" << (char*) request.data() << "]" << std::endl;
 
         //  Do some 'work'
-        sleep (1);
+   //     sleep (1);
 
         //  Send reply back to client
         zmq::message_t reply (6);
@@ -40,7 +40,7 @@ int Comp2::c2method( int input){
     workers.bind ("inproc://workers");
 
     //  Launch pool of worker threads
-    for (int thread_nbr = 0; thread_nbr != 5; thread_nbr++) {
+    for (int thread_nbr = 0; thread_nbr != 10; thread_nbr++) {
         pthread_t worker;
         pthread_create (&worker, NULL, worker_routine, (void *) &context);
     }
