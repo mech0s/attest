@@ -10,15 +10,18 @@ helloServer_SOURCES = \
 	src/serverMain.cpp
 
 %.pb.cc %.pb.h: %.proto
-	$(PROTOC) --proto_path=$(srcdir) --cpp_out=@builddir@ $^
+	$(PROTOC) --proto_path=$(srcdir)/$(@D) --cpp_out=@builddir@/$(@D) $^
 
-dist_noinst_DATA = whatever.proto
+dist_noinst_DATA = \
+	src/pb2/phase2.proto
 
-nodist_helloServer_SOURCES = @builddir@/whatever.pb.cc @builddir@/whatever.pb.h
+nodist_helloServer_SOURCES = \
+	@builddir@/src/pb2/phase2.pb.cc \
+	@builddir@/src/pb2/phase2.pb.h
 
-MOSTLYCLEANFILES = whatever.pb.cc whatever.pb.h
+MOSTLYCLEANFILES = $(nodist_helloServer_SOURCES)
 
-BUILT_SOURCES = whatever.pb.h
+BUILT_SOURCES = @builddir@/src/pb2/phase2.pb.h
 
 AM_CPPFLAGS = -I@builddir@
 #+=
