@@ -3,7 +3,7 @@ AM_LDFLAGS = -lzmq -lpthread
 bin_PROGRAMS = helloClient helloServer
 helloClient_SOURCES = \
 	src/component1/comp1.cpp \
-	src/clientMain.cpp
+	src/clientMain.cpp 
 
 helloServer_SOURCES = \
 	src/component2/comp2.cpp \
@@ -14,6 +14,10 @@ helloServer_SOURCES = \
 
 dist_noinst_DATA = \
 	src/pb2/phase2.proto
+
+nodist_helloClient_SOURCES = \
+	@builddir@/src/pb2/phase2.pb.cc \
+	@builddir@/src/pb2/phase2.pb.h
 
 nodist_helloServer_SOURCES = \
 	@builddir@/src/pb2/phase2.pb.cc \

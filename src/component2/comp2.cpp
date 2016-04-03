@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <cassert>
 
+#include "src/pb2/phase2.pb.h"
 
 void *worker_routine (void *arg)
 {
@@ -18,6 +19,11 @@ void *worker_routine (void *arg)
         //  Wait for next request from client
         zmq::message_t request;
         socket.recv (&request);
+        Person p = Person();
+        std::cout << "size " << request.size() << std::endl;
+	p.ParseFromArray(request.data(),request.size());
+
+
         std::cout << "Received request: [" << (char*) request.data() << "]" << std::endl;
 
         //  Do some 'work'
