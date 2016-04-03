@@ -19,8 +19,6 @@ int Comp1::c1method( int input){
     std::string str;
     p.SerializeToString(&str);
     int sz = str.length();
-    zmq::message_t *query = new zmq::message_t(sz);
-    memcpy(query->data (), str.c_str(), sz);
 //    query->size = sz;
     //socket->send (*query);
 
@@ -30,6 +28,8 @@ int Comp1::c1method( int input){
         //memcpy (request.data (), "Hello", 5);
         std::cout << "Sending Hello " << request_nbr << "." << std::endl;
 	//socket.send (request, ZMQ_SNDMORE || ZMQ_NOBLOCK);
+        zmq::message_t *query = new zmq::message_t(sz);
+        memcpy(query->data (), str.c_str(), sz);
         socket.send (*query);
         //  Get the reply.
         zmq::message_t reply;

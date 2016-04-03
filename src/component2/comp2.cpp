@@ -22,9 +22,10 @@ void *worker_routine (void *arg)
         Person p = Person();
         std::cout << "size " << request.size() << std::endl;
 	p.ParseFromArray(request.data(),request.size());
+        std::cout << p.name() << std::endl;
+        std::cout << p.id() << std::endl;
 
-
-        std::cout << "Received request: [" << (char*) request.data() << "]" << std::endl;
+        //std::cout << "Received request: [" << (char*) request.data() << "]" << std::endl;
 
         //  Do some 'work'
    //     sleep (1);
