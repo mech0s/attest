@@ -24,6 +24,7 @@ AC_ARG_WITH([protoc],
     [PROTOC='protoc'])
 AC_SUBST([PROTOC])
 
+PKG_CHECK_MODULES(libzmq, libzmq >= 3.0)
 
 #PKG_CHECK_MODULES(PROTOBUF, protobuf >= 2.4.0)
 #
