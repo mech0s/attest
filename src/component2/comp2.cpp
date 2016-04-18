@@ -1,5 +1,6 @@
 #include "comp2.hpp"
 #include <zmq.hpp>
+#include <zmq_addon.hpp>
 #include <string>
 #include <iostream>
 #include <pthread.h>
