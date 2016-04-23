@@ -1,6 +1,7 @@
 AC_INIT([ATTEST], 1.0)
 AM_INIT_AUTOMAKE([subdir-objects])
 AC_PROG_CXX
+AX_CXX_COMPILE_STDCXX_11
 AC_CONFIG_FILES([
   Makefile
 ])

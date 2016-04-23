@@ -18,7 +18,7 @@ void *worker_routine (void *arg)
 
     while (true) {
         //  Wait for next request from client
-        zmq::message_t request;
+        zmq::multipart_t request;
         socket.recv (&request);
         Person p = Person();
         std::cout << "size " << request.size() << std::endl;
