@@ -16,13 +16,22 @@ void *worker_routine (void *arg)
     zmq::socket_t socket (*context, ZMQ_REP);
     socket.connect ("inproc://workers");
 
+    bool ok = true;
+
     while (true) {
         //  Wait for next request from client
-        zmq::multipart_t request;
-        socket.recv (&request);
+        zmq::multipart_t mp_request;
+        zmq::message_t msg;
+	ok = mp_request.recv(socket);
+
+        assert(mp_request.size() == 1);
+        assert(ok);
+
+//        socket.recv (&request);
         Person p = Person();
-        std::cout << "size " << request.size() << std::endl;
-	p.ParseFromArray(request.data(),request.size());
+        msg = mp_request.pop();
+        std::cout << "size " << msg.size() << std::endl;
+	p.ParseFromArray(msg.data(),msg.size());
         std::cout << p.name() << std::endl;
         std::cout << p.id() << std::endl;
 
@@ -53,7 +62,7 @@ int Comp2::c2method( int input){
         pthread_create (&worker, NULL, worker_routine, (void *) &context);
     }
     //  Connect work threads to client threads via a queue
-    zmq::proxy (clients, workers, NULL);
+    zmq::proxy ((void *)clients, (void *)workers, NULL);
 
   return input * 4;
 
