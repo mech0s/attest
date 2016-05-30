@@ -23,15 +23,18 @@ dist_noinst_DATA = \
 
 nodist_helloClient_SOURCES = \
 	@builddir@/src/pb2/phase2.pb.cc \
-	@builddir@/src/pb2/phase2.pb.h
-
+	@builddir@/src/pb2/phase2.pb.h \
+	@builddir@/src/pb2/sentMessage.pb.h\
+	@builddir@/src/pb2/sentMessage.pb.cc
 nodist_helloServer_SOURCES = \
 	@builddir@/src/pb2/phase2.pb.cc \
 	@builddir@/src/pb2/phase2.pb.h
 
 MOSTLYCLEANFILES = $(nodist_helloServer_SOURCES)
 
-BUILT_SOURCES = @builddir@/src/pb2/phase2.pb.h
+BUILT_SOURCES = @builddir@/src/pb2/phase2.pb.h \
+				@builddir@/src/pb2/sentMessage.pb.h
+
 
 AM_CPPFLAGS = -I@builddir@ 
 #+=
