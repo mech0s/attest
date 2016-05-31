@@ -6,8 +6,17 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <cassert>
+#include <fstream>
+#include <fcntl.h>
+#include <google/protobuf/io/coded_stream.h>
+#include <google/protobuf/io/zero_copy_stream_impl.h>
+#include <google/protobuf/descriptor.pb.h>
+#include <google/protobuf/descriptor_database.h>
+#include <google/protobuf/dynamic_message.h>
 
 #include "src/pb2/phase2.pb.h"
+
+using namespace google::protobuf;
 
 void *worker_routine (void *arg)
 {
@@ -48,7 +57,65 @@ void *worker_routine (void *arg)
     return (NULL);
 }
 
+void descriptorTests(){
+//    fstream in("allProto.desc", ios::in | ios::binary);
+//    io::IstreamInputStream raw_in(&in);
+    int fd = open("allProto.desc", O_RDONLY);
+    FileDescriptorSet fds;
+    fds.ParseFromFileDescriptor(fd);
+
+    fds.SerializeToOstream(&cout);
+
+
+
+    fd = open("allProto.desc", O_RDONLY);
+    io::FileInputStream fis(fd);
+//    io::CodedInputStream cis(fis);
+    const void* buffer;
+    int size;
+    while(fis.Next(&buffer, &size)){
+      cout.write((const char*)buffer, size);
+      cout << endl << size << endl;
+    }
+
+    close(fd);
+
+
+    cout << "Num protos " << fds.file_size() << endl;
+    FileDescriptorProto  fdp;
+
+    fdp = fds.file(1);
+    cout << fdp.name() << endl;
+
+    SimpleDescriptorDatabase sddb;
+    for ( int i = 0; i < fds.file_size() ; i++ ){
+       sddb.Add(fds.file(i));
+    }
+    DescriptorPool dp(&sddb);
+
+    DynamicMessageFactory dmf(&dp);
+    const Descriptor* desc;
+    desc = dp.FindMessageTypeByName("Person");
+    Message *msg = dmf.GetPrototype(desc)->New();
+
+    const FieldDescriptor* idField = desc->FindFieldByName("id");
+    const FieldDescriptor* nameField = desc->FindFieldByName("name");
+
+    const Reflection *msgRefl = msg->GetReflection();
+    msgRefl->SetInt32( msg, idField, 8123);
+    msgRefl->SetString( msg, nameField, "Does it work?");
+
+    string data;
+    msg->SerializeToString(&data);
+    cout << data << endl;
+
+
+}
+
 int Comp2::c2method( int input){
+
+    descriptorTests();
+
     //  Prepare our context and sockets
     zmq::context_t context (1);
     zmq::socket_t clients (context, ZMQ_ROUTER);
