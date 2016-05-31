@@ -18,9 +18,15 @@ helloServer_LDADD = $(libzmq_LIBS) $(PTHREAD_LIBS)
 %.pb.cc %.pb.h: %.proto
 	$(PROTOC) --descriptor_set_out=foo.desc --proto_path=$(srcdir)/$(@D) --cpp_out=@builddir@/$(@D) $^
 
+allProto = $(wildcard src/pb2/*.proto)
+
+allProto.desc :
+	$(PROTOC) --descriptor_set_out=$@ $(allProto)
+
 dist_noinst_DATA = \
 	src/pb2/phase2.proto \
-	src/pb2/sentMessage.proto
+	src/pb2/sentMessage.proto \
+        allProto.desc
 
 nodist_helloClient_SOURCES = \
 	@builddir@/src/pb2/phase2.pb.cc \
