@@ -3,7 +3,8 @@
 #include <zmq_addon.hpp>
 #include <string>
 #include <iostream>
-#include <windows.h>
+//#include <windows.h>
+#include <unistd.h>
 #include <fstream>
 #include <sstream>
 
@@ -127,7 +128,7 @@ int Comp1::c1method( int input){
         zmq::message_t reply;
         socket.recv (&reply);
         std::cout << "Received World " << request_nbr << std::endl;
-		Sleep(1000);
+	usleep(500000);
     }
 
   return input * 2;
