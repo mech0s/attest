@@ -16,12 +16,12 @@ helloServer_CPPFLAGS = $(libzmq_CFLAGS)
 helloServer_LDADD = $(libzmq_LIBS) $(PTHREAD_LIBS)
 
 %.pb.cc %.pb.h: %.proto
-	$(PROTOC) --descriptor_set_out=foo.desc --proto_path=$(srcdir)/$(@D) --cpp_out=@builddir@/$(@D) $^
+	$(PROTOC) --proto_path=$(srcdir)/$(@D) --cpp_out=@builddir@/$(@D) $^
 
-allProto = $(wildcard src/pb2/*.proto)
+allProto = $(wildcard ../src/pb2/*.proto)
 
 allProto.desc :
-	$(PROTOC) --descriptor_set_out=$@ $(allProto)
+	$(PROTOC) --descriptor_set_out=$@ --proto_path=$(srcdir)/$(@D) $(allProto)
 
 dist_noinst_DATA = \
 	src/pb2/phase2.proto \
