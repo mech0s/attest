@@ -18,10 +18,9 @@ helloServer_LDADD = $(libzmq_LIBS) $(PTHREAD_LIBS)
 %.pb.cc %.pb.h: %.proto
 	$(PROTOC) --proto_path=$(srcdir)/$(@D) --cpp_out=@builddir@/$(@D) $^
 
-allProto = $(wildcard ../src/pb2/*.proto)
 
-allProto.desc :
-	$(PROTOC) --descriptor_set_out=$@ --proto_path=$(srcdir)/$(@D) $(allProto)
+allProto.desc : $(wildcard $(srcdir)/src/pb2/*.proto)
+	$(PROTOC) --descriptor_set_out=$@ --proto_path=$(<D) $^
 
 dist_noinst_DATA = \
 	src/pb2/phase2.proto \
@@ -38,7 +37,8 @@ nodist_helloServer_SOURCES = \
 	@builddir@/src/pb2/phase2.pb.h
 
 MOSTLYCLEANFILES = $(nodist_helloClient_SOURCES) \
-                   $(nodist_helloServer_SOURCES)
+                   $(nodist_helloServer_SOURCES) \
+		   allProto.desc
 
 BUILT_SOURCES = @builddir@/src/pb2/phase2.pb.h \
 		@builddir@/src/pb2/sentMessage.pb.h
