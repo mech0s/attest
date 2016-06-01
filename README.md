@@ -43,7 +43,8 @@ After "make distclean", running "git status" should show only your edits and any
 Notes relate to Cygwin 32 on Windows 64bit. Probably applicable to other versions.
 
 apt-cyg is a script that allows additional libraries to be installed
-https://github.com/transcode-open/apt-cyg
+- https://github.com/transcode-open/apt-cyg
+
 Place the script on your path e.g. /usr/bin/apt-cyg
 
 This should make installation of protobuf and zmq easier:
@@ -52,7 +53,9 @@ apt-cyg install libprotobuf-devel
 apt-cyg install libzmqpp-devel
 ```
 
-The example code uses the cppzmq headers from here - https://github.com/zeromq/cppzmq
+The example code uses the cppzmq headers from here 
+- https://github.com/zeromq/cppzmq
+
 Copy zmq.hpp and zmq_addon.hpp to /usr/include
 
 
