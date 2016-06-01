@@ -1,8 +1,8 @@
 # attest
 Autotools test project, using a variety of technologies
-C++
-ZMQ 
-Google ProtoBuf
+- C++
+- ZMQ 
+- Google ProtoBuf
 
 After cloning, run 
 ```bash
