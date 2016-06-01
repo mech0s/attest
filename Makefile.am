@@ -1,4 +1,4 @@
-AM_LDFLAGS= -pthread
+AM_LDFLAGS= -lpthread
 
 bin_PROGRAMS = helloClient helloServer
 helloClient_SOURCES = \
