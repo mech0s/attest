@@ -50,7 +50,7 @@ Place the script on your path e.g. /usr/bin/apt-cyg
 This should make installation of protobuf and zmq easier:
 ```bash
 apt-cyg install libprotobuf-devel
-apt-cyg install libzmqpp-devel
+apt-cyg install libzmq-devel
 ```
 
 The example code uses the cppzmq headers from here 
